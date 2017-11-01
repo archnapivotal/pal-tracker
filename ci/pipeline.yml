@@ -1,0 +1,31 @@
+---
+resources:
+- name: pal-tracker
+  type: git
+  source:
+    uri: https://github.com/archnaaju/pal-tracker
+    branch: master
+    private_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCz/3JPuzA5P6hwvCN/m1i9y955ukF88js1IPw2GfYVQ/6WZVKRxq8HfFKuewcTUw4m7Y0W2GDD5mUH4NKpoXR7jslt1uF/+IY27M8HeHcN56pZaO8ccdBcR2t7nbvZnFzKH2ZSSr7pv/xpamVJ4CV9SK5Ojm+hkCYeW1vQBpoXSSt9JhnCkDgm6QHUW2Ec41qhuOG4MpsI4yzBjvBSJNrSe8YV0gr2EdNhZdoTYfuJqODim7QonNbkPjwjWXp/dfUr7ikVoeFEq3siTzgEWy8vE0mWlejHrqQIqy/maQlcZXeGwkndDasGVjFL86M4Ha0T9Lt9gPupDlji5O0fUvS9A3sNt+4dC7MrO5OW594MehU3qXdbJVTuT66b6rZ3w7bzy12LiBOHvLAkXOs3nfC3mQeI0IwKO6/lr0ebzAEkCp2qEEpwpyDJZ0M0C5vRvPo7x+RqCpF7/KFepGubPRA6UeqOIhH6fwYYFhFrX6Ii0uNYlvsSeN/qlcO3UiSMlfzuovR2OCRDSv2uB9FsKjP2+HEsihqp1GRjjZmuBPnrSviX16yjFQbqzSpTOHGfUI3Re4W1M3mWmUOCOGiqQAkIG4fEDE69BCUqf93G1Ihz52CfIbS5+3hzsg+zUfH+v1bQ+IDVcCRur+mjffdv+Y9sRJ6GWOnhdqFXL4MJHXnHPQ== archnaaju@gmail.com
+
+- name: deploy
+  type: cf
+  source:
+    api: https://api.sys.longs.pal.pivotal.io
+    username: archna.gupta@mphasis.com
+    password: be575110
+    organization: agupta-pal
+    space: sandbox
+
+jobs:
+- name: build-and-deploy
+  plan:
+  - get: pal-tracker
+    trigger: true
+  - task: build and test
+    file: pal-tracker/ci/build.yml
+  - put: deploy
+    params:
+      manifest: pal-tracker/manifest.yml
+      path: build-output/pal-tracker.jar
+      environment_variables:
+        WELCOME_MESSAGE: "Hello from Concourse"
