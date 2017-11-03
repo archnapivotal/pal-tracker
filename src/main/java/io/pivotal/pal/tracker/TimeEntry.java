@@ -1,7 +1,7 @@
 package io.pivotal.pal.tracker;
 
 import java.time.LocalDate;
-
+//POJO Class
 public class TimeEntry {
     private long id;
     private long projectId;
