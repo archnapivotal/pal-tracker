@@ -1,6 +1,6 @@
 cf-api-url: http://api.sys.longs.pal.pivotal.io
-cf-username: archna.gupta@mphasis.com
-cf-password: be575110
+cf-username: 
+cf-password: 
 cf-org: agupta-pal
 github-repository: git@github.com:archnaaju/pal-tracker.git
 github-private-key: |
